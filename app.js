@@ -1,6 +1,8 @@
 // app.js
 App({
   onLaunch() {
+    // 初始化云函数
+    wx.cloud.init()
     // 展示本地存储能力
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
