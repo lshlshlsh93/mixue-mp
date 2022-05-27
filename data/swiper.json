@@ -1,0 +1,62 @@
+[{
+  "fields": [{
+    "dateFormatType": "timestamp-ms",
+    "description": "CMS 系统字段，请勿随意修改。通过 CMS 系统录入的数据会默认添加该字段",
+    "displayName": "创建时间",
+    "id": "_createTime",
+    "isSystem": true,
+    "name": "_create_time",
+    "type": "DateTime"
+  }, {
+    "dateFormatType": "timestamp-ms",
+    "description": "CMS 系统字段，请勿随意修改。通过 CMS 系统录入的数据会默认添加该字段",
+    "displayName": "修改时间",
+    "id": "_updateTime",
+    "isSystem": true,
+    "name": "_update_time",
+    "type": "DateTime"
+  }, {
+    "displayName": "轮播图",
+    "id": "ne6nhz7cl0rd75blztfr5nfiujvittb0",
+    "isRequired": true,
+    "name": "image_url",
+    "order": 2,
+    "resourceLinkType": "https",
+    "type": "Image"
+  }, {
+    "copyable": true,
+    "description": "CMS 系统字段，请勿随意修改",
+    "displayName": "文档 ID",
+    "id": "_id",
+    "isHidden": true,
+    "isSystem": true,
+    "name": "_id",
+    "type": "String"
+  }, {
+    "defaultValue": "url",
+    "displayName": "跳转类型",
+    "enumElementType": "string",
+    "enumElements": [{
+      "label": "网址",
+      "value": "url"
+    }, {
+      "label": "产品",
+      "value": "product"
+    }],
+    "id": "o3ihsovp8ckc1yq8xmegkmldhih17iy9",
+    "isRequired": true,
+    "name": "type",
+    "order": 4,
+    "type": "Enum"
+  }, {
+    "displayName": "目标",
+    "id": "5ccapwcqi5ktbdt71gkg7bno596dx6zq",
+    "isRequired": true,
+    "name": "target",
+    "order": 5,
+    "type": "String"
+  }],
+  "collectionName": "mixue_swiper",
+  "displayName": "轮播图",
+  "_id": "16db756f6290eeb104ce553100b24490"
+}]
