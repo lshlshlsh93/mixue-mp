@@ -54,7 +54,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25rpx;
+  padding: 0 20rpx;
   box-sizing: border-box;
   /*vip-box*/
   /*coin-box*/
@@ -89,7 +89,6 @@
 .member-area .coin-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .member-area .coin-box image {
@@ -98,6 +97,23 @@
 }
 
 .member-area .coin-box .currency {
+  margin-left: 30rpx;
   margin-top: 10rpx;
   color: #d32d25;
+}
+
+.member-area .btn-login {
+  width: 152rpx;
+  height: 65rpx;
+  border-radius: 10rpx;
+  background-color: #E60012;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25rpx;
+}
+
+.member-area .btn-login:active {
+  opacity: 0.6;
 }

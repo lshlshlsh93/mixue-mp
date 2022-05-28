@@ -1,4 +1,5 @@
 /* pages/index/index.scss */
+// @import '../../style/theme.scss';
 .swiper-container {
   width: 100vw;
   height: 630rpx;
@@ -50,7 +51,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25rpx;
+  padding: 0 20rpx;
   box-sizing: border-box;
 
 
@@ -89,14 +90,29 @@
   .coin-box{
     display: flex;
     flex-direction: column;
-     align-items: center;
     image{
       width: 130rpx;
     height: 70rpx;
     }
     .currency{
+      margin-left: 30rpx;
       margin-top: 10rpx;
       color: #d32d25;
+    }
+  }
+  //登录按钮
+  .btn-login{
+    width: 152rpx;
+    height: 65rpx;
+    border-radius: 10rpx;
+    background-color: #E60012;
+    color: #fff;
+    display: flex; 
+    justify-content: center; //主轴居中
+    align-items: center; // 主轴的垂直轴
+    font-size: 25rpx;
+    &:active{
+      opacity: 0.6;
     }
   }
 }

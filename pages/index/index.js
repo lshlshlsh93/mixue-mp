@@ -3,15 +3,28 @@
 const {
   default: swiper
 } = require("../../api/swiper");
-
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    // 轮播图数据
     swiperList: [],
-    current: 0
+    // 当前轮播图图片索引
+    current: 0,
+    // 是否登录
+    memberInfo: false,
+    // isLogin:false
+  },
+  /**
+   * 登录
+   */
+  toLogin() {
+    wx.navigateTo({
+      url: '/pages/login/index',
+    })
   },
   /**
    * 轮播图发生改变
@@ -45,24 +58,31 @@ Page({
    */
   onLoad: function (options) {
     swiper.list().then(response => {
-      this.setData({
-        swiperList: response.data
-      })
-    })
+        this.setData({
+          swiperList: response.data
+        })
+      }),
+      this.loadMemberInfo();
   },
-
+  loadMemberInfo() {
+    // 如果手机号存在，就设置信息
+    if (wx.getStorageSync('phoneNumber')) {
+      this.setData({
+        memberInfo: true
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.loadMemberInfo();
   },
 
   /**
