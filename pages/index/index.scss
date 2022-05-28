@@ -3,6 +3,8 @@
   width: 100vw;
   height: 630rpx;
   position: relative;
+
+  
   /*swiper*/
   swiper {
     height: 100%;
@@ -16,7 +18,7 @@
   .dots{
     position: absolute;
     left: 50rpx;
-    bottom: 50rpx;
+    bottom: 58rpx;
     display: inline-flex;
     .dot{
       width: 8rpx;
@@ -30,6 +32,71 @@
         width: 29rpx;
         opacity: 1;
       }
+    }
+  }
+}
+
+/* 会员 */
+.member-area{
+  z-index: 2;
+  margin-top: -40rpx;
+  overflow:hidden;
+  width: 688rpx;
+  height: 174rpx;
+  border-radius: 16 rpx;
+  box-shadow: -2px -3px 10px rgba(0,0,0,0.2);
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25rpx;
+  box-sizing: border-box;
+
+
+  /*vip-box*/
+  .vip-box{
+    display: flex;
+
+    image{
+      width: 100rpx;
+      height: 100rpx;
+      border-radius: 50rpx;
+      overflow: hidden;
+      margin-right: 26rpx;
+      flex-shrink: 0;
+    }
+
+  /*meta*/
+  .meta{
+    
+    .title{
+      font-size: 32rpx;
+      font-weight: bold;
+      margin-bottom: 18rpx;
+    }
+    .tips{
+      color: #777777;
+      // 中间字体大小
+      font-size: 22rpx;
+      margin-top: 14rpx;
+    }
+  }
+
+
+  }
+  /*coin-box*/
+  .coin-box{
+    display: flex;
+    flex-direction: column;
+     align-items: center;
+    image{
+      width: 130rpx;
+    height: 70rpx;
+    }
+    .currency{
+      margin-top: 10rpx;
+      color: #d32d25;
     }
   }
 }

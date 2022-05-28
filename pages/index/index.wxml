@@ -7,9 +7,32 @@
       </swiper-item>
     </swiper>
     <view class="dots">
-      <view class="dot {{current !== index || 'active'}}"  wx:for="{{swiperList}}" wx:key="index">
+      <view class="dot {{current !== index || 'active'}}" wx:for="{{swiperList}}" wx:key="index">
       </view>
     </view>
   </view>
 
+  <!-- 会员、积分区域 -->
+  <view class="member-area">
+    <!-- vip区域 -->
+    <view class="vip-box">
+      <!-- 图片区域 -->
+      <image src="../../assets/images/nature-3.jpg"></image>
+      <!-- 信息 -->
+      <view class="meta">
+        <!-- 标题 -->
+        <view class="title">微雪花会员</view>
+        <!-- color="#000" trackColor="white" -->
+        <progress-bar value="{{33}}" width="320rpx" />
+        <!-- 提示 -->
+        <view class="tips">再升1级可享【升级礼包】等6项权益</view>
+      </view>
+    </view>
+    <view class="coin-box">
+      <!-- 图片 -->
+      <image mode="aspectFill" src="../../assets/images/nature-3.jpg"></image>
+      <!-- 货币 -->
+      <view class="currency">51</view>
+    </view>
+  </view>
 </view>

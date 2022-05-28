@@ -1,0 +1,4 @@
+<view class="track" style="{{trackStyle}}">
+  <view class="bar" style="{{barStyle}}">
+  </view>
+</view>
