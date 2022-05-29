@@ -1,0 +1,37 @@
+<view class="page">
+  <!-- header -->
+  <view class="header">
+    <tabs tabs="{{  [{ value:'nearby',label: '附近门店' },{ value:'recent',label:'常去门店' }] }}"></tabs>
+    <input type="text" class="search" placeholder="搜索门店" />
+  </view>
+  <!-- map -->
+  <map class="store-map" id="store-map" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}"
+    show-location enable-overlooking>
+    <image src="../../assets/images/current.png" class="current-icon" bindtap="goToCurrentLocation"></image>
+  </map>
+  <!-- collapse-area -->
+  <view class="collapse-area">
+    收起地图
+  </view>
+  <!-- store-list   -->
+  <scroll-view class="store-list" scroll-y>
+    <view class="store-box" wx:for="{{storeList}}" wx:key="index">
+      <view class="info-area">
+        <view class="name">{{item.name}}</view>
+        <view class="address">{{item.address}}</view>
+        <view class="time">营业时间：{{item.opening_time}}</view>
+        <view class="tag">{{dict[item.status]}}</view>
+      </view>
+
+      <view class="location-area">
+        <view class="distance">距离{{item.distance}}km</view>
+        <view class="action-area">
+        <!-- 跳转到对应门店地理位置 -->
+          <image class="location" bindtap="navigateLocation" data-location="{{item.location}}" src="../../assets/images/location.jpg"></image>
+          <!-- 打电话按钮 -->
+          <image class="phone" src="../../assets/images/phone.jpg" bindtap="call" data-phone="{{item.phone_number}}"></image>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

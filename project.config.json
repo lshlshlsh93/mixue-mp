@@ -30,6 +30,9 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "useCompilerPlugins":[
+      "sass"
+    ],
     "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
@@ -61,7 +64,8 @@
       "list": []
     },
     "miniprogram": {
-      "list": [{
+      "list": [
+        {
           "name": "登录页面",
           "pathName": "pages/login/index",
           "query": "",
@@ -70,6 +74,12 @@
         {
           "name": "我的",
           "pathName": "pages/me/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "门店",
+          "pathName": "pages/store/index",
           "scene": null
         }
       ]
