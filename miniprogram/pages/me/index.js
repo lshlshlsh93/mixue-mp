@@ -6,11 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    mobile: ''
+    userInfo:null
   },
   computed: {
     desensitiveMobile(data) {
-      let mobile = data.mobile
+      if(!data.userInfo){
+        return ''
+      }
+      let mobile = data.userInfo.phone_number
       if (mobile) {
         mobile = mobile.replace(/^(\d{3})\d{6}(\d{2})$/, "$1******$2")
       }
@@ -21,6 +24,13 @@ Page({
   login() {
     wx.navigateTo({
       url: '/pages/login/index',
+    })
+  },
+
+  toCustomPage(e){
+    const {code} = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/custom-page/index?code=${code}`,
     })
   },
   /**
@@ -41,9 +51,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    const mobile = wx.getStorageSync('phoneNumber')
+    const userInfo = wx.getStorageSync('user')
     this.setData({
-      mobile
+      userInfo
     })
   },
 

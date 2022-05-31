@@ -1,23 +1,29 @@
-// app.js
+import userApi from './api/user'
 App({
   onLaunch() {
-    // 初始化云函数
-    wx.cloud.init()
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    if (!this.isLogin()) {
+      this.checkUser()
+    }
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
+  },
+  globalData: {},
+  isLogin() {
+    return Boolean(wx.getStorageSync('user'))
+  },
+  checkUser() {
+    wx.showLoading({
+      title: '正在检查登录',
     })
-  },
-  globalData: {
-    userInfo: null
-  },
+    userApi.me().then(res => {
+      if (res.data.length) {
+        //  this.globalData.userInfo = res.data[0]
+        wx.setStorageSync('user', res.data[0])
+        wx.reLaunch({
+          url: '/pages/index/index',
+        })
+      }
+      wx.hideLoading()
+    })
+  }
 
-  
 })

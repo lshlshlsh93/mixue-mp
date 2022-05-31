@@ -1,5 +1,5 @@
 // 获取云数据库
-const db = wx.cloud.database()
+import {db} from './cloud-init'
 const list = () => {
   return db.collection('mixue_swiper').limit(10).get();
 }

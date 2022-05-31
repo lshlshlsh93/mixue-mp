@@ -21,9 +21,7 @@
 
 .store-map {
   width: 100%;
-  height: 520rpx;
   position: relative;
-
   .current-icon {
     width: 44rpx;
     height: 44rpx;
@@ -41,15 +39,25 @@
   align-items: center;
   font-size: 20rpx;
   color: #777777;
-
+  .icon{
+    height: 30rpx;
+    width: 30rpx;
+    margin-left: 10rpx;
+  }
 }
 
 
 .store-list {
   width: 100%;
   background-color: #f8f8f8;
-  height: calc(100vh - 700rpx);
   box-sizing: border-box;
+
+  .empty{
+    font-size: 24rpx;
+    text-align: center;
+    color: #777777;
+    margin-top: 20rpx;
+  }
 
   .store-box {
     background-color: #ffffff;
@@ -95,7 +103,7 @@
       display: flex;
       height: 100%;
       flex-direction: column;
-      align-items: center; 
+      align-items: center;
 
       .distance {
         margin-bottom: 35rpx;
@@ -108,10 +116,91 @@
         width: 112rpx;
         display: flex;
         justify-content: space-around;
+
         image {
           width: 40rpx;
           height: 40rpx;
         }
+      }
+    }
+
+
+  }
+
+}
+
+.store-detail {
+
+  .notification {
+    width: 100%;
+    height: 86rpx;
+    display: flex;
+    background-color: #fcf0f4;
+    align-items: center;
+    padding: 0 30rpx;
+
+    .icon {
+      width: 38rpx;
+      margin-right: 14rpx;
+      height: 38rpx;
+    }
+
+    .info {
+      font-size: 20rpx;
+      color: #E60012;
+    }
+  }
+
+  .container {
+    padding: 0 30rpx;
+
+    .header-area {
+      margin: 25rpx 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .info {
+        .title {
+          margin-bottom: 14rpx;
+          line-height: 26rpx;
+          font-size: 26rpx;
+          font-weight: bold;
+        }
+
+        .address {
+          line-height: 20rpx;
+          font-size: 20rpx;
+          color: #777777;
+        }
+      }
+
+      .distance {
+        display: flex;
+        font-size: 20rpx;
+        color: #777777;
+      }
+    }
+
+    .store-detail-map {
+      width: 100%;
+      height: 392rpx;
+      margin: 25rpx 0;
+    }
+
+    .menu-btn {
+      width: 100%;
+      background-color: #E60012;
+      height: 85rpx;
+      color: white;
+      border-radius: 10rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 42rpx;
+
+      &.button-hover {
+        opacity: 0.6
       }
     }
 

@@ -3,7 +3,6 @@
 const {
   default: swiper
 } = require("../../api/swiper");
-const app = getApp()
 Page({
 
   /**
@@ -16,6 +15,7 @@ Page({
     current: 0,
     // 是否登录
     memberInfo: false,
+    userInfo: null
     // isLogin:false
   },
   /**
@@ -62,7 +62,10 @@ Page({
           swiperList: response.data
         })
       }),
-      this.loadMemberInfo();
+      // this.loadMemberInfo();
+      this.setData({
+        userInfo: wx.getStorageSync('user')
+      })
   },
   loadMemberInfo() {
     // 如果手机号存在，就设置信息
@@ -75,7 +78,7 @@ Page({
   /**
    * 点击立即点餐卡片时跳转到点餐tab
    */
-  onMenuCardClick(){
+  onMenuCardClick() {
     wx.switchTab({
       url: '/pages/menu/index',
     })
@@ -83,7 +86,7 @@ Page({
   /**
    * banner-list点击事件
    */
-  onArticleCilck(){
+  onArticleCilck() {
     wx.navigateTo({
       url: '/pages/web-view/index?url=http://baidu.com',
     })

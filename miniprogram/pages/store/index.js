@@ -1,8 +1,8 @@
 import storeApi from '../../api/store'
-// 引入SDK核心类，js文件根据自己业务，位置可自行放置
 const QQMapWX = require('../../utils/qqmap-wx-jssdk.min');
 const computedBehavior = require('miniprogram-computed').behavior
-
+const key = 'M3ABZ-5GSC2-HJIUS-C3HR5-5SDSV-A5BQZ'
+const chooseLocation = requirePlugin('chooseLocation');
 Page({
   behaviors: [computedBehavior],
 
@@ -10,26 +10,44 @@ Page({
    * 页面的初始数据
    */
   data: {
+    /**
+     * 头部显示的数据列表
+     */
+    headerTabs: [{
+      value: 'nearby',
+      label: '附近门店'
+    }, {
+      value: 'recent',
+      label: '常去门店'
+    }],
+    // 位置信息(经度、维度、速度、精确度)
     latitude: 0,
     longitude: 0,
     speed: 0,
     accuracy: 0,
     // 标记点
     markers: [{
-      id: 1,
-      title: '实例位置',
-      latitude: 34.820556,
-      longitude: 114.298353,
+      id: 1, //标记点 id
+      title: '', // 标注点名
+      latitude: 34.81568,
+      longitude: 114.35461,
       iconPath: '../../assets/images/marker.png',
       width: '55rpx',
       height: '69rpx'
     }],
     // 门店列表
     storeList: [],
+    // 数据字典
     dict: {
       'OPENING': '营业中',
       'CLOSED': '已关店'
-    }
+    },
+    // 是否展示门店显示弹窗详情
+    storeDetailShow: false,
+    // 当前点击的店名
+    currentStore: null,
+    // 是否收起地图
+    collapse: false
   },
   computed: {
     markers(data) {
@@ -40,13 +58,12 @@ Page({
           title: item.name,
           latitude: item.location.latitude,
           longitude: item.location.longitude,
-          iconPth: '../../assets/images/marker.png',
+          iconPath: '../../assets/images/marker.png',
           width: '55rpx',
           height: '69rpx'
         }
       })
     }
-
   },
   mapContext: null,
   mapSdk: null,
@@ -57,7 +74,61 @@ Page({
     this.initMapSdk()
     this.loadCurrentLocation()
     this.initMapContext()
+    // 页面卸载时设置插件选点数据为null，防止再次进入页面，geLocation返回的是上次选点结果
+    chooseLocation.setLocation(null);
+  },
+  /**
+   * 视野发生变化时触发
+   */
+  onRegionChange(e) {
 
+  },
+  /**
+   * 当点击地图上的标记点时触发的事件
+   */
+  onMarkerTab(e) {
+    const {
+      markerId
+    } = e.detail
+    const currentStore = this.data.storeList[markerId - 1]
+    this.setData({
+      storeDetailShow: true,
+      currentStore: currentStore
+    })
+  },
+  /**
+   * 搜索门店
+   */
+  chooseLocation() {
+    const referer = '醚雪冰城测试'; //调用插件的app的名称
+    const location = JSON.stringify({
+      latitude: this.data.latitude,
+      longitude: this.data.longitude
+    });
+    wx.navigateTo({
+      url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location
+    });
+  },
+  /**
+   * 显示展开地图还是收起地图
+   */
+  collapse() {
+    this.setData({
+      collapse: !this.data.collapse
+    })
+  },
+  /**
+   * 点击对应的店名打开弹窗显示对应的店名信息
+   * @param {*} e 
+   */
+  popupStoreDetail(e) {
+    const {
+      store
+    } = e.currentTarget.dataset
+    this.setData({
+      currentStore: store,
+      storeDetailShow: true
+    })
   },
   /**
    * 获取门店列表
@@ -71,7 +142,10 @@ Page({
    * 点击门店列表的位置箭头跳转到对应的门店位置
    */
   navigateLocation(e) {
-    const {latitude,longitude} = e.currentTarget.dataset.location
+    const {
+      latitude,
+      longitude
+    } = e.currentTarget.dataset.location
     wx.openLocation({
       latitude,
       longitude
@@ -81,8 +155,10 @@ Page({
    * 点击给对应带的门店打电话
    * @param {*} e 
    */
-  call(e){
-    const {phone} = e.currentTarget.dataset
+  call(e) {
+    const {
+      phone
+    } = e.currentTarget.dataset
     wx.makePhoneCall({
       phoneNumber: phone,
     })
@@ -92,13 +168,21 @@ Page({
    */
   initMapSdk() {
     this.mapSdk = new QQMapWX({
-      key: 'M3ABZ-5GSC2-HJIUS-C3HR5-5SDSV-A5BQZ'
+      key
     })
   },
   /**
    * 筛选门店列表
    */
   makeStoreList(storeList) {
+    /**
+     * 判断当前门店列表是否为空
+     */
+    if (storeList.length === 0) {
+      this.setData({
+        storeList: []
+      })
+    }
     const locationList = storeList.map((item) => {
       const location = item.location;
       return {
@@ -107,23 +191,37 @@ Page({
       }
     })
     /**
-     * 计算距离
+     * 如果当前位置的附近门店列表不为空
+     *  那么就计算距离当前位置门店的距离
+     *  否则不进行计算距离操作
      */
-    this.mapSdk.calculateDistance({
-      to: locationList,
-      success: (res) => {
-        storeList.forEach((item, key) => {
-          storeList[key]['distance'] = (res.result.elements[key].distance / 1000).toFixed(1)
-        })
-        console.log(res);
-        this.setData({
-          storeList
-        })
-      },
-      fail: function (error) {
-        console.error(error);
-      }
-    })
+    if (locationList.length) {
+      /**
+       * 计算距离
+       */
+      this.mapSdk.calculateDistance({
+        from: {
+          latitude: this.data.latitude,
+          longitude: this.data.longitude
+        },
+        to: locationList,
+        success: (res) => { 
+          storeList.forEach((item, key) => {
+            storeList[key]['distance'] = (res.result.elements[key].distance / 1000).toFixed(1)
+            storeList[key]['originDistance'] = res.result.elements[key].distance
+          })
+          this.setData({
+            storeList
+          })
+        },
+        fail: (error) => {
+          console.error(error);
+          this.setData({
+            storeList: [],
+          })
+        }
+      })
+    }
   },
   /**
    * 加载context
@@ -133,7 +231,6 @@ Page({
       this.mapContext = res.context
     }).exec()
   },
-
   /**
    * 获取当前位置
    *  TODO 获取当前的地理位置、速度。当用户离开小程序后，此接口无法调用
@@ -142,6 +239,7 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success: (res) => {
+        console.log(res);
         const latitude = res.latitude
         const longitude = res.longitude
         const speed = res.speed
@@ -154,7 +252,6 @@ Page({
         })
         this.fetchStoreList()
       }
-
     })
   },
 
@@ -163,6 +260,8 @@ Page({
    */
   goToCurrentLocation() {
     this.mapContext.moveToLocation()
+    this.loadCurrentLocation()
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -175,6 +274,28 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+    /**
+     * 获取搜索门店里搜索的详细位置信息
+     */
+    const locaction = chooseLocation.getLocation();
+    if (locaction) {
+      const {
+        longitude,
+        latitude,
+        address,
+        city,
+        district,
+        province,
+        name
+      } = locaction
+      this.setData({
+        latitude,
+        longitude
+      })
+      this.fetchStoreList()
+
+    }
 
   },
 

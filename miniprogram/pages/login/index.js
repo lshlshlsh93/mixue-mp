@@ -1,4 +1,6 @@
 // pages/login/index.js
+
+import userApi from '../../api/user'
 Page({
 
   /**
@@ -11,10 +13,17 @@ Page({
    * 一键登录
    */
   login(e) {
-    let number = "17638990879";
-    wx.setStorageSync("phoneNumber", number)
-    wx.navigateBack({
-      delta: 0,
+    console.log(e);
+    const phoneNumber = "17638990879";
+    userApi.create({
+      phoneNumber
+    }).then(res => {
+      userApi.me().then(res => {
+        wx.setStorageSync('user', res.data[0])
+        wx.navigateBack({
+          delta: 0,
+        })
+      })
     })
     /**
      * 
@@ -41,7 +50,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if(getApp().isLogin()){
+      wx.navigateBack({
+        delta: 0,
+      })
+    }
   },
 
   /**
