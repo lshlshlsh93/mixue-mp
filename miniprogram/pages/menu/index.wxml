@@ -1,2 +1,41 @@
-<!--pages/menu/index.wxml-->
-<text>我是点餐页面</text>
+<view class="header" style="{{ headerStyle }}">
+    <image class="back-icon" src="../../assets/icons/arrow-left.svg"></image>
+    <view class="search_input">
+        <image class="search-icon" src="../../assets/icons/search.svg">
+        </image>
+        <input placeholder="请输入商品名" />
+    </view>
+</view>
+
+
+<view class="menu-info">
+    <view class="store-info">
+        <view class="store-name">蜜雪冰城星光天地店
+            <image src="../../assets/icons/arrow-right.svg"></image>
+        </view>
+        <view class="store-location">
+            <image class="location-icon" src="../../assets/icons/location.svg"></image>
+            <view class="distance-info">
+                距离您 <view class="distance" style="color:red">5km</view>
+            </view>
+        </view>
+    </view>
+    <view class="trade-type">
+        自提
+    </view>
+</view>
+
+
+<view class="menu">
+    <!-- 侧边栏组件 -->
+    <sidebar ></sidebar>
+    <view class="menu-list">
+        <view class="swiper">
+            轮播图区域
+        </view>
+
+        <view class="list">
+            商品列表
+        </view>
+    </view>
+</view>

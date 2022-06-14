@@ -1,0 +1,8 @@
+<scroll-view class="sidebar" scroll-y showScrollbar="{{false}}" enhanced>
+    <view wx:for="{{ list }}" wx:key="index" class="sidebar-item {{  index === current ? 'active':  ''}}"
+        bindtap="switchItem" data-current="{{index}}">
+        <image src="../../assets/images/menu-icon.png" class="item-icon"></image>
+        <view class="item-label">双选冰淇淋</view>
+        <view wx:if="{{ index === current }}" class="left-line"></view>
+    </view>
+</scroll-view>

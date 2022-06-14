@@ -21,14 +21,14 @@
       <!-- 信息 -->
       <view class="meta">
         <!-- 标题 -->
-        <view class="title">{{ userInfo ? '微雪花会员' :'尊敬的用户'}}</view>
+        <view class="title">{{ user.isLogin ? '微雪花会员' :'尊敬的用户'}}</view>
         <!-- color="#000" trackColor="white" -->
-        <progress-bar wx:if="{{ userInfo }}" value="{{33}}" width="320rpx" />
+        <progress-bar wx:if="{{ user.isLogin }}" value="{{33}}" width="320rpx" />
         <!-- 提示 -->
-        <view class="tips">{{userInfo ? '再升1级可享【升级礼包】等6项权益':'会员可享【闲时优惠】等多项权益'}}</view>
+        <view class="tips">{{ user.isLogin ? '再升1级可享【升级礼包】等6项权益':'会员可享【闲时优惠】等多项权益'}}</view>
       </view>
     </view>
-    <view wx:if="{{ userInfo }}" class="coin-box">
+    <view wx:if="{{ user.isLogin }}" class="coin-box">
       <!-- 图片 -->
       <image mode="aspectFill" src="../../assets/images/coin.png"></image>
       <!-- 货币 -->
@@ -36,14 +36,14 @@
     </view>
 
     <!-- 授权登录按钮 -->
-    <view wx:if="{{!userInfo}}" class="btn-login" bindtap="toLogin">授权登录</view>
+    <view wx:if="{{ !user.isLogin }}" class="btn-login" bindtap="toLogin">授权登录</view>
   </view>
 
   <!-- 点餐banner -->
   <view class="menu-banner">
     <view class="location">
       <image src="../../assets/images/menu.png"> </image>
-      <view class="name">星光天地店</view>
+      <view class="name">{{ nearByStore ? nearByStore.name : '附近暂无门店' }}</view>
     </view>
     <!-- 图片卡片 -->
     <image class="menu-card" src="../../assets/images/menu-banner.jpg" bindtap="onMenuCardClick"></image>

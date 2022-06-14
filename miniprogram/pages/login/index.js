@@ -1,7 +1,10 @@
 // pages/login/index.js
 
 import userApi from '../../api/user'
+import {userBehavior} from '../../behaviors/user-behavior'
 Page({
+
+  behaviors:[userBehavior],
 
   /**
    * 页面的初始数据
@@ -13,13 +16,14 @@ Page({
    * 一键登录
    */
   login(e) {
-    console.log(e);
     const phoneNumber = "17638990879";
     userApi.create({
       phoneNumber
     }).then(res => {
+      console.log(res);
       userApi.me().then(res => {
         wx.setStorageSync('user', res.data[0])
+        this.updatePhoneNumber  ()
         wx.navigateBack({
           delta: 0,
         })
@@ -56,14 +60,6 @@ Page({
       })
     }
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
@@ -71,38 +67,8 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
 
-  },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
 
-  },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

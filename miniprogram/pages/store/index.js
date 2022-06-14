@@ -3,8 +3,14 @@ const QQMapWX = require('../../utils/qqmap-wx-jssdk.min');
 const computedBehavior = require('miniprogram-computed').behavior
 const key = 'M3ABZ-5GSC2-HJIUS-C3HR5-5SDSV-A5BQZ'
 const chooseLocation = requirePlugin('chooseLocation');
+import {
+  globalBehavior
+} from '../../behaviors/global-bbehavior'
+import {
+  userBehavior
+} from '../../behaviors/user-behavior'
 Page({
-  behaviors: [computedBehavior],
+  behaviors: [globalBehavior, userBehavior, computedBehavior],
 
   /**
    * 页面的初始数据
@@ -20,11 +26,9 @@ Page({
       value: 'recent',
       label: '常去门店'
     }],
-    // 位置信息(经度、维度、速度、精确度)
+    // 位置信息(经度、维度)
     latitude: 0,
     longitude: 0,
-    speed: 0,
-    accuracy: 0,
     // 标记点
     markers: [{
       id: 1, //标记点 id
@@ -45,7 +49,7 @@ Page({
     // 是否展示门店显示弹窗详情
     storeDetailShow: false,
     // 当前点击的店名
-    currentStore: null,
+    // currentStore: null,
     // 是否收起地图
     collapse: false
   },
@@ -77,11 +81,15 @@ Page({
     // 页面卸载时设置插件选点数据为null，防止再次进入页面，geLocation返回的是上次选点结果
     chooseLocation.setLocation(null);
   },
-  /**
-   * 视野发生变化时触发
-   */
-  onRegionChange(e) {
-
+  goToMenu(e) {
+    console.log(e);
+    const {
+      storeId
+    } = e.currentTarget.dataset
+    console.log(storeId);
+    wx.navigateTo({
+      url: `/pages/menu/index?storeId=${storeId}`,
+    })
   },
   /**
    * 当点击地图上的标记点时触发的事件
@@ -205,7 +213,7 @@ Page({
           longitude: this.data.longitude
         },
         to: locationList,
-        success: (res) => { 
+        success: (res) => {
           storeList.forEach((item, key) => {
             storeList[key]['distance'] = (res.result.elements[key].distance / 1000).toFixed(1)
             storeList[key]['originDistance'] = res.result.elements[key].distance
@@ -236,23 +244,29 @@ Page({
    *  TODO 获取当前的地理位置、速度。当用户离开小程序后，此接口无法调用
    */
   loadCurrentLocation() {
-    wx.getLocation({
-      type: 'wgs84',
-      success: (res) => {
-        console.log(res);
-        const latitude = res.latitude
-        const longitude = res.longitude
-        const speed = res.speed
-        const accuracy = res.accuracy
-        this.setData({
-          latitude,
-          longitude,
-          speed,
-          accuracy
-        })
-        this.fetchStoreList()
-      }
+    let {
+      latitude,
+      longitude
+    } = this.data.user.location
+    console.log(latitude, longitude);
+    this.setData({
+      latitude,
+      longitude
     })
+    this.fetchStoreList()
+    // wx.getLocation({
+    //   type: 'wgs84',
+    //   success: (res) => {
+    //     const latitude = res.latitude
+    //     const longitude = res.longitude
+    //     this.setData({
+    //       latitude,
+    //       longitude
+    //     })
+    //     this.fetchStoreList()
+    //   }
+    // })
+
   },
 
   /**

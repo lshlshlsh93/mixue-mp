@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "sidebar": "../../components/sidebar/index"
+  },
+  "navigationStyle": "custom"
 }

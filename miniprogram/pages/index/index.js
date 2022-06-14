@@ -1,22 +1,24 @@
-// pages/index/index.js
-
 const {
   default: swiper
 } = require("../../api/swiper");
+import {
+  userBehavior
+} from '../../behaviors/user-behavior'
+import storeApi from '../../api/store'
 Page({
-
+  behaviors: [userBehavior], // 全局状态管理的behaviors
+  storeBindings: {
+    fields: {
+      phoneNumber: () => store.phoneNumber
+    },
+  },
   /**
    * 页面的初始数据
    */
   data: {
-    // 轮播图数据
-    swiperList: [],
-    // 当前轮播图图片索引
-    current: 0,
-    // 是否登录
-    memberInfo: false,
-    userInfo: null
-    // isLogin:false
+    swiperList: [], // 轮播图数据
+    current: 0, // 当前轮播图图片索引
+    nearByStore: null, //附近门店
   },
   /**
    * 登录
@@ -58,29 +60,17 @@ Page({
    */
   onLoad: function (options) {
     swiper.list().then(response => {
-        this.setData({
-          swiperList: response.data
-        })
-      }),
-      // this.loadMemberInfo();
       this.setData({
-        userInfo: wx.getStorageSync('user')
+        swiperList: response.data
       })
-  },
-  loadMemberInfo() {
-    // 如果手机号存在，就设置信息
-    if (wx.getStorageSync('phoneNumber')) {
-      this.setData({
-        memberInfo: true
-      })
-    }
+    })
   },
   /**
    * 点击立即点餐卡片时跳转到点餐tab
    */
   onMenuCardClick() {
     wx.switchTab({
-      url: '/pages/menu/index',
+      url: '/pages/store/index',
     })
   },
   /**
@@ -92,50 +82,13 @@ Page({
     })
   },
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.loadMemberInfo();
+    storeApi.nearByStore(this.data.user.location).then(res => {
+      !res.data.length || (this.setData({
+        nearByStore: res.data[0]
+      }))
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

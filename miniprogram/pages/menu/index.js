@@ -5,14 +5,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    headerStyle: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.makeHeaderStyle()
+  },
+  /**
+   * 头部样式
+   */
+  makeHeaderStyle() {
+    const {
+      top,
+      bottom,
+      height
+    } = wx.getMenuButtonBoundingClientRect()
+    const menuButtonCenterPoint = top + height / 2
+    const headerStyle = 'margin-top: calc(' + menuButtonCenterPoint + 'px-32rpx);'
+    this.setData({
+      headerStyle
+    })
   },
 
   /**
