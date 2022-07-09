@@ -1,22 +1,21 @@
 <view class="header" style="{{ headerStyle }}">
-    <image class="back-icon" src="../../assets/icons/arrow-left.svg"></image>
+    <image class="back-icon" bindtap="switchCurrentStore" src="../../assets/icons/arrow-left.svg"></image>
     <view class="search_input">
         <image class="search-icon" src="../../assets/icons/search.svg">
         </image>
         <input placeholder="请输入商品名" />
     </view>
 </view>
-
-
 <view class="menu-info">
     <view class="store-info">
-        <view class="store-name">蜜雪冰城星光天地店
+        <view class="store-name" bindtap="switchCurrentStore">
+            {{ currentStore.name }}
             <image src="../../assets/icons/arrow-right.svg"></image>
         </view>
         <view class="store-location">
             <image class="location-icon" src="../../assets/icons/location.svg"></image>
             <view class="distance-info">
-                距离您 <view class="distance" style="color:red">5km</view>
+                距离您 <view class="distance" style="color:red">{{ currentStore.distance }}km</view>
             </view>
         </view>
     </view>
@@ -28,14 +27,11 @@
 
 <view class="menu">
     <!-- 侧边栏组件 -->
-    <sidebar ></sidebar>
-    <view class="menu-list">
-        <view class="swiper">
-            轮播图区域
-        </view>
+    <sidebar list="{{ goodsList }}" bind:on-change="onSideBarChange" defaultCurrent="{{ sidebarCurrent }}" />
 
-        <view class="list">
-            商品列表
+    <goods-list list="{{ goodsList }}" current="{{ currentCategoryIndex }}" bind:on-change="onGoodsListChange">
+        <view slot="before" class="swiper">
+            <force-swiper list="{{ swiperList }}" />
         </view>
-    </view>
+    </goods-list>
 </view>

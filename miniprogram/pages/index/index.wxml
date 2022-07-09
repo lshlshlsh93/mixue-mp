@@ -1,23 +1,15 @@
 <view class="page">
-  <!-- 轮播图区域 -->
-  <view wx:if="{{swiperList.length }}" class="swiper-container">
-    <swiper bindchange="onSwierChange">
-      <swiper-item wx:for="{{swiperList}}" wx:key="index">
-        <image bindtap="onSwiperTap" data-item="{{item}}" mode="aspectFill" src="{{item.image_url}}"></image>
-      </swiper-item>
-    </swiper>
-    <view class="dots">
-      <view class="dot {{current !== index || 'active'}}" wx:for="{{swiperList}}" wx:key="index">
-      </view>
-    </view>
-  </view>
+  <!-- 轮播图区域开始 -->
+  <force-swiper list="{{ swiperList }}" round style="width : 100vw; height : 630rpx"
+    dotsStyle="left: 50rpx; bottom: 58rpx;" />
+  <!-- 轮播图区域结束 -->
 
-  <!-- 会员、积分区域 -->
+  <!-- 会员、积分区域 开始 -->
   <view class="member-area">
     <!-- vip区域 -->
     <view class="vip-box">
       <!-- 图片区域 -->
-      <image src="../../assets/images/vip-pic.png"></image>
+      <image src="../../assets/images/vip-pic.png" />
       <!-- 信息 -->
       <view class="meta">
         <!-- 标题 -->
@@ -30,7 +22,7 @@
     </view>
     <view wx:if="{{ user.isLogin }}" class="coin-box">
       <!-- 图片 -->
-      <image mode="aspectFill" src="../../assets/images/coin.png"></image>
+      <image mode="aspectFill" src="../../assets/images/coin.png" />
       <!-- 货币 -->
       <view class="currency">51</view>
     </view>
@@ -38,8 +30,9 @@
     <!-- 授权登录按钮 -->
     <view wx:if="{{ !user.isLogin }}" class="btn-login" bindtap="toLogin">授权登录</view>
   </view>
+  <!-- 会员、积分区域 结束 -->
 
-  <!-- 点餐banner -->
+  <!-- 点餐banner 开始-->
   <view class="menu-banner">
     <view class="location">
       <image src="../../assets/images/menu.png"> </image>
@@ -48,6 +41,7 @@
     <!-- 图片卡片 -->
     <image class="menu-card" src="../../assets/images/menu-banner.jpg" bindtap="onMenuCardClick"></image>
   </view>
+  <!-- 点餐banner 结束-->
 
   <!-- banner-list -->
   <view class="banner-list">

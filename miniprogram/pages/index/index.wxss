@@ -1,45 +1,4 @@
 @charset "UTF-8";
-/* pages/index/index.scss */
-.swiper-container {
-  width: 100vw;
-  height: 630rpx;
-  position: relative;
-  /*swiper*/
-}
-
-.swiper-container swiper {
-  height: 100%;
-}
-
-.swiper-container swiper image {
-  width: 100%;
-  height: 100%;
-  border-bottom-right-radius: 20rpx;
-  border-bottom-left-radius: 20rpx;
-}
-
-.swiper-container .dots {
-  position: absolute;
-  left: 50rpx;
-  bottom: 58rpx;
-  display: inline-flex;
-}
-
-.swiper-container .dots .dot {
-  width: 8rpx;
-  height: 8rpx;
-  background-color: #fff;
-  opacity: 0.5;
-  border-radius: 4rpx;
-  margin-left: 4rpx;
-  transition: all 0.5s;
-}
-
-.swiper-container .dots .dot.active {
-  width: 29rpx;
-  opacity: 1;
-}
-
 /* 会员 */
 .member-area {
   z-index: 2;

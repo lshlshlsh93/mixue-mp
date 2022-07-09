@@ -1,2 +1,12 @@
-<!--components/force-swiper/index.wxml-->
-<text>components/force-swiper/index.wxml</text>
+<!-- 轮播图区域 -->
+<view wx:if="{{ list.length }}" style="{{ style }}" class="swiper-container">
+  <swiper bindchange="onSwierChange" class="{{ round ? 'round' : ''}}">
+    <swiper-item wx:for="{{ list }}" wx:key="index">
+      <image bindtap="onSwiperTap" data-item="{{ item }}" mode="aspectFill" src="{{ item.image_url }}"></image>
+    </swiper-item>
+  </swiper>
+  <view class="dots" style="left: calc( 50% - {{ ( list.length * 8 + 21 ) / 2 }}rpx); {{ dotsStyle }}">
+    <view class="dot {{ current !== index || 'active' }}" wx:for="{{ list }}" wx:key="index">
+    </view>
+  </view>
+</view>

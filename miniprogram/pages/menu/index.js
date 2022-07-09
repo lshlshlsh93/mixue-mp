@@ -1,18 +1,42 @@
-// pages/menu/index.js
+import swiperApi from '../../api/swiper'
+import {
+  userBehavior
+} from '../../behaviors/user-behavior'
+import goodsApi from '../../api/goods'
+import goodsCategoryApi from '../../api/goods-category'
 Page({
-
+  behaviors: [userBehavior],
   /**
    * 页面的初始数据
    */
   data: {
-    headerStyle: ''
+    headerStyle: '',
+    swiperList: [],
+    goodsList: [],
+    currentCategoryIndex: 0,
+    sidebarCurrent:0
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.makeHeaderStyle()
+    this.fetchSwiperList()
+    this.fetchData()
+  },
+  fetchSwiperList() {
+    swiperApi.list().then(response => {
+      this.setData({
+        swiperList: response.data
+      })
+    })
+  },
+  fetchData() {
+    goodsApi.tree().then(res => {
+      this.setData({
+        goodsList: res.result
+      })
+    })
   },
   /**
    * 头部样式
@@ -29,53 +53,37 @@ Page({
       headerStyle
     })
   },
-
   /**
-   * 生命周期函数--监听页面初次渲染完成
+    跳转到门店页面
    */
-  onReady: function () {
-
+  switchCurrentStore() {
+    this.setCurrentStore(null)
+    wx.navigateBack({
+      delta: 0,
+    })
   },
-
+  /**
+   * 触发点餐侧边栏的事件
+   * @param {*} e 
+   */
+  onSideBarChange(e) {
+    this.setData({
+      currentCategoryIndex: e.detail.current
+    })
+  },
+  onGoodsListChange(e){
+    this.setData({
+      sidebarCurrent:e.detail.index
+    })
+  },
+  onScroll(e) {
+    const rect = wx.createSelectorQuery().select('section')
+    console.log(rect);
+  },
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

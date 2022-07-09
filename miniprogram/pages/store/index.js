@@ -4,13 +4,10 @@ const computedBehavior = require('miniprogram-computed').behavior
 const key = 'M3ABZ-5GSC2-HJIUS-C3HR5-5SDSV-A5BQZ'
 const chooseLocation = requirePlugin('chooseLocation');
 import {
-  globalBehavior
-} from '../../behaviors/global-bbehavior'
-import {
   userBehavior
 } from '../../behaviors/user-behavior'
 Page({
-  behaviors: [globalBehavior, userBehavior, computedBehavior],
+  behaviors: [ userBehavior, computedBehavior],
 
   /**
    * 页面的初始数据
@@ -30,28 +27,23 @@ Page({
     latitude: 0,
     longitude: 0,
     // 标记点
-    markers: [{
-      id: 1, //标记点 id
-      title: '', // 标注点名
-      latitude: 34.81568,
-      longitude: 114.35461,
-      iconPath: '../../assets/images/marker.png',
-      width: '55rpx',
-      height: '69rpx'
-    }],
-    // 门店列表
-    storeList: [],
+    // markers: [{
+    //   id: 1, //标记点 id
+    //   title: '', // 标注点名
+    //   latitude: 0,
+    //   longitude: 0,
+    //   iconPath: '../../assets/images/marker.png',
+    //   width: '55rpx',
+    //   height: '69rpx'
+    // }],
+    storeList: [], // 门店列表
     // 数据字典
     dict: {
       'OPENING': '营业中',
       'CLOSED': '已关店'
     },
-    // 是否展示门店显示弹窗详情
-    storeDetailShow: false,
-    // 当前点击的店名
-    // currentStore: null,
-    // 是否收起地图
-    collapse: false
+    storeDetailShow: false, // 是否展示门店显示弹窗详情
+    collapse: false// 是否收起地图
   },
   computed: {
     markers(data) {
@@ -86,7 +78,6 @@ Page({
     const {
       storeId
     } = e.currentTarget.dataset
-    console.log(storeId);
     wx.navigateTo({
       url: `/pages/menu/index?storeId=${storeId}`,
     })
@@ -98,11 +89,11 @@ Page({
     const {
       markerId
     } = e.detail
-    const currentStore = this.data.storeList[markerId - 1]
+    const store = this.data.storeList[markerId - 1]
     this.setData({
-      storeDetailShow: true,
-      currentStore: currentStore
+      storeDetailShow: true
     })
+    this.setCurrentStore(store)
   },
   /**
    * 搜索门店
@@ -133,10 +124,11 @@ Page({
     const {
       store
     } = e.currentTarget.dataset
+    console.log(e);
     this.setData({
-      currentStore: store,
       storeDetailShow: true
     })
+    this.setCurrentStore(store)
   },
   /**
    * 获取门店列表
@@ -247,7 +239,7 @@ Page({
     let {
       latitude,
       longitude
-    } = this.data.user.location
+    } = this.data.user.currentLocation
     console.log(latitude, longitude);
     this.setData({
       latitude,
@@ -266,7 +258,6 @@ Page({
     //     this.fetchStoreList()
     //   }
     // })
-
   },
 
   /**
@@ -308,43 +299,6 @@ Page({
         longitude
       })
       this.fetchStoreList()
-
     }
-
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

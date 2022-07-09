@@ -12,6 +12,7 @@ const storeList = (longitude, latitude) => {
         .limit(10).get()
 }
 const nearByStore = (location) => {
+    console.log(location);
     return db.collection('mixue_store').where({
         location: db.command.geoNear({
             geometry: db.Geo.Point(location.longitude, location.latitude),

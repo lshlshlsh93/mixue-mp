@@ -42,7 +42,7 @@
   </scroll-view>
 
   <!-- page-container -->
-  <page-container wx:if="{{currentStore}}" show="{{ storeDetailShow }}" round position="bottom" class="store-detail">
+  <page-container wx:if="{{ currentStore }}" show="{{ storeDetailShow }}" round position="bottom" class="store-detail">
     <!-- notification -->
     <view class="notification">
       <image src="../../assets/icons/speaker.svg" class="icon"></image>

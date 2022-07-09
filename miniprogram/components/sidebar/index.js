@@ -6,9 +6,20 @@ Component({
     properties: {
         list: {
             type: Array,
-            value: [
-                1, 2, 3
-            ]
+            value: []
+        },
+        defaultCurrent: {
+            type: Number,
+            value: 0,
+        }
+    },
+    observers: {
+        'defaultCurrent': function (defaultCurrent) {
+            console.log(defaultCurrent);
+            this.data.current === defaultCurrent || this.setData({
+                current: defaultCurrent
+            })
+
         }
     },
 
@@ -18,14 +29,19 @@ Component({
     data: {
         current: 0
     },
-
     /**
      * 组件的方法列表
      */
     methods: {
-        switchItem(e){
-            const {current} = e.currentTarget.dataset
+        switchItem(e) {
+            const {
+                current
+            } = e.currentTarget.dataset
             this.setData({
+                current
+            })
+            // 触发新事件
+            this.triggerEvent('on-change', {
                 current
             })
         },

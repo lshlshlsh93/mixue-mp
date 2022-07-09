@@ -5,13 +5,10 @@ import {
     global
 } from '../models/global'
 
-
-
 export const globalBehavior = BehaviorWithStore({
-    storeBindings: {
-        namespace: "global",
+    storeBindings: [{
         store: global,
         fields: ["currentStore"],
         actions: ["setCurrentStore"],
-    },
+    }]
 });

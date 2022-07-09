@@ -1,5 +1,3 @@
-// pages/login/index.js
-
 import userApi from '../../api/user'
 import {userBehavior} from '../../behaviors/user-behavior'
 Page({
@@ -66,9 +64,4 @@ Page({
   onShow: function () {
 
   },
-
-
-
-
-
 })

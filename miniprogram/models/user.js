@@ -9,7 +9,7 @@ export const user = observable({
     //手机号
     phoneNumber: (userInStorage ? userInStorage.phone_number : null),
     // 位置信息
-    location : (locationStorage ? locationStorage : null), 
+    currentLocation : (locationStorage ? locationStorage : null), 
     /**
      * 获取加密后的手机号
      */
@@ -35,7 +35,7 @@ export const user = observable({
     /**
      * 更新位置信息
      */
-    updateLocation: action(function(){
-        this.location = locationStorage ? locationStorage : null
+    updateCurrentLocation: action(function(){
+        this.currentLocation = locationStorage ? locationStorage : null
     })
 })
